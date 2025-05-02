@@ -8,6 +8,12 @@ install:
 run:
 	python main.py
 
+fastpai:
+	fastapi run main.py
+
+uvicorn:
+	uvicorn main:app --workers 4
+
 # Clean .pyc and cache files in all directories
 clean:
 	@echo Cleaning up Python cache files...
