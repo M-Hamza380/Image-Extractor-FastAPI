@@ -12,7 +12,7 @@ fastpai:
 	fastapi run main.py
 
 uvicorn:
-	uvicorn main:app --workers 4
+	uvicorn main:app --workers 2
 
 # Clean .pyc and cache files in all directories
 clean:
