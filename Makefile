@@ -4,15 +4,21 @@
 install:
 	pip install -r requirements.txt
 
-# run the FastAPI application
+# run the FastAPI application with python
 run:
 	python main.py
 
+# run the FastAPI application with fastapi
 fastpai:
 	fastapi run main.py
 
+# run the FastAPI application with uvicorn
 uvicorn:
 	uvicorn main:app --workers 2
+
+# run the FastAPI application with poetry
+pt run:
+	poetry run uvicorn main:app --reload
 
 # Clean .pyc and cache files in all directories
 clean:
