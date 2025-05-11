@@ -3,7 +3,7 @@ import os, sys
 from pathlib import Path
 from typing import Protocol
 from datetime import datetime
-from colorama import init, Fore, Style
+from colorama import init, Fore, Style # type: ignore
 
 # Initialize colorama
 init(autoreset=True)
