@@ -1,10 +1,13 @@
-from fastapi import FastAPI # type: ignore
+from fastapi import FastAPI, Request # type: ignore
 from fastapi.middleware.cors import CORSMiddleware # type: ignore
 from fastapi.templating import Jinja2Templates # type: ignore
 from fastapi.staticfiles import StaticFiles # type: ignore
 from pathlib import Path
+import uvicorn # type: ignore
 
+from ImageExtractor.config import Setting
 from ImageExtractor.routers import ocr_routes
+from ImageExtractor.utils.logger import logger
 
 # Add templating files directory for serving html pages
 base_path = Path(__file__).parent
@@ -27,13 +30,21 @@ app.add_middleware(
 )
 
 # Add static files directory for serving staticfiles
-app.mount("/static", StaticFiles(directory=str()), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Include router
 app.include_router(ocr_routes, prefix="/api/v1", tags=['Image Extractor'])
 
 # Health check endpoint
 @app.get("/")
-def index():
-    return {"message": "Hello World!"}
+def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+if __name__ == "__main__":
+    setting = Setting()
+
+    if setting.debug:
+        uvicorn.run('main:app', host='localhost', port='1253', reload=True)
+    else:
+        uvicorn.run('main:app', host='localhost', port='1253', workers=2)
 
