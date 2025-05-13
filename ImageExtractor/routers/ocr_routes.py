@@ -20,8 +20,11 @@ router = APIRouter()
 async def get_available_models() -> AvailableModels:
     """Get list of available models"""
     try:
-        models = 
-        return AvailableModels
+        models = ocr
+        return AvailableModels(
+            success = True,
+            models = models
+        )
     except Exception as e:
         logger.error(f"Error in get_available_models function: {e}")
         raise HTTPException(status_code = 500, detail=str(e))

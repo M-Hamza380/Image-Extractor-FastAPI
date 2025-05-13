@@ -8,3 +8,10 @@ colorama
 numpy
 pillow
 opencv-python
+gunicorn
+pytest
+requests
+flake8
+black
+pre-commit
+isort

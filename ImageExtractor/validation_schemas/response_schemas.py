@@ -6,10 +6,10 @@ class AvailableModels(BaseModel):
     """Response available models"""
     success: bool = Field(
         default_factory = bool,
-        description = ''
+        description = 'Message for display with true or false'
     )
     models: list = Field(
         default_factory = list,
-        description = 'List of all models'
+        description = 'List of available models'
     )
     
