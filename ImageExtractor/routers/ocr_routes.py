@@ -1,4 +1,4 @@
-from fastapi import ( # type: ignore
+from fastapi import (
     APIRouter,
     File,
     UploadFile,
@@ -7,10 +7,10 @@ from fastapi import ( # type: ignore
     Form,
     HTTPException
 )
-import aiofiles # type: ignore
+import aiofiles
 from pathlib import Path
 
-from ..utils.logger import logger
+from ..utility.logger import logger
 from ..validation_schemas.response_schemas import AvailableModels
 
 # Create router for instance

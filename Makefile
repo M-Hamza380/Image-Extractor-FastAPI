@@ -1,23 +1,26 @@
 # Makefile
 
 # install dependencies
-install:
-	pip install -r requirements.txt
+insta:
+	poetry install
 
 # run the FastAPI application with python
 run:
 	python main.py
 
+test:
+	poetry run pytest -v tests/
+
 # run the FastAPI application with fastapi
 fastpai:
-	fastapi run main.py
+	fastapi run --workers 2 main.py
 
 # run the FastAPI application with uvicorn
 uvicorn:
 	uvicorn main:app --workers 2
 
 # run the FastAPI application with poetry
-pt run:
+pt_run:
 	poetry run uvicorn main:app --reload
 
 # Clean .pyc and cache files in all directories

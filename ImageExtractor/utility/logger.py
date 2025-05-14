@@ -1,9 +1,8 @@
 import logging
 import os, sys
 from pathlib import Path
-from typing import Protocol
 from datetime import datetime
-from colorama import init, Fore, Style # type: ignore
+from colorama import init, Fore, Style
 
 # Initialize colorama
 init(autoreset=True)
@@ -19,7 +18,7 @@ def ensure_dir_exists(dir_path):
         return None
 
 # Logs directory
-BASE_DIR = Path(__file__).parent.parent
+BASE_DIR = Path(__file__).parent.parent.parent
 log_dir = BASE_DIR / "logs"
 
 # Current day and create directory
@@ -29,7 +28,7 @@ ensure_dir_exists(day_dir)
 
 def directory_with_timestamp(base_time):
     try:
-        timestamp = base_time.strf("%d-%m-%Y %H:%M")
+        timestamp = base_time.strftime("%d-%m-%Y_%H-%M")
         timestamp_dir = os.path.join(day_dir, timestamp)
         ensure_dir_exists(timestamp_dir)
         return timestamp_dir

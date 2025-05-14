@@ -1,14 +1,14 @@
-from fastapi import FastAPI, Request, HTTPException # type: ignore
-from fastapi.middleware.cors import CORSMiddleware # type: ignore
-from fastapi.templating import Jinja2Templates # type: ignore
-from fastapi.staticfiles import StaticFiles # type: ignore
-from fastapi.responses import HTMLResponse # type: ignore
+from fastapi import FastAPI, Request, HTTPException 
+from fastapi.middleware.cors import CORSMiddleware 
+from fastapi.templating import Jinja2Templates 
+from fastapi.staticfiles import StaticFiles 
+from fastapi.responses import HTMLResponse 
 from pathlib import Path
-import uvicorn # type: ignore
+import uvicorn
 
 from ImageExtractor.config import Setting
-from ImageExtractor.routers import ocr_routes
-from ImageExtractor.utils.logger import logger
+# from ImageExtractor.routers import ocr_routes
+from ImageExtractor.utility.logger import logger
 
 # Add templating files directory for serving html pages
 base_path = Path(__file__).parent
@@ -33,8 +33,8 @@ app.add_middleware(
 # Add static files directory for serving staticfiles
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Include router
-app.include_router(ocr_routes, prefix="/api/v1", tags=['Image Extractor'])
+# # Include router
+# app.include_router(ocr_routes, prefix="/api/v1", tags=['Image Extractor'])
 
 # Health check endpoint
 @app.get("/", response_class=HTMLResponse)
