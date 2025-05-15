@@ -1,0 +1,13 @@
+# .flake8
+[flake8]
+max-line-length = 125
+extend=ignore = E203, E266, E501, W503
+max-complexity = 18
+select = B,C,E,F,WT4,B9
+exclude = 
+    .git,
+    old,
+    dist,
+    .img_extractor,
+    __pycache__,
+    .dockerignore
