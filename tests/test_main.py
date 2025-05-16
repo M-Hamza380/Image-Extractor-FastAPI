@@ -4,9 +4,8 @@ from main import app
 
 client = TestClient(app)
 
+
 def test_index():
-    response = client.get('/')
+    response = client.get("/")
     assert response.status_code == 200
-    assert response.headers['content-type'].startswith("text/html")
-
-
+    assert response.headers["content-type"].startswith("text/html")

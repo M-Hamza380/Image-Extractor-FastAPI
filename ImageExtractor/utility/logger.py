@@ -1,11 +1,14 @@
 import logging
-import os, sys
-from pathlib import Path
+import os
+import sys
 from datetime import datetime
-from colorama import init, Fore, Style
+from pathlib import Path
+
+from colorama import Fore, Style, init
 
 # Initialize colorama
 init(autoreset=True)
+
 
 def ensure_dir_exists(dir_path):
     try:
@@ -17,6 +20,7 @@ def ensure_dir_exists(dir_path):
         print(f"Error in ensure_dir_exists function: {e}")
         return None
 
+
 # Logs directory
 BASE_DIR = Path(__file__).parent.parent.parent
 log_dir = BASE_DIR / "logs"
@@ -25,6 +29,7 @@ log_dir = BASE_DIR / "logs"
 current_dir = datetime.now().strftime("%A")
 day_dir = os.path.join(log_dir, current_dir)
 ensure_dir_exists(day_dir)
+
 
 def directory_with_timestamp(base_time):
     try:
@@ -36,15 +41,20 @@ def directory_with_timestamp(base_time):
         print(f"Error in directory_with_timestamp function: {e}")
         return None
 
+
 base_time = datetime.now()
 timestamp_dir = directory_with_timestamp(base_time)
+if timestamp_dir is None:
+    raise RuntimeError(
+        "Failed to create or access the timestamp directory for logging."
+    )
 
 log_file_paths = {
     logging.INFO: os.path.join(timestamp_dir, "info.log"),
     logging.DEBUG: os.path.join(timestamp_dir, "debug.log"),
     logging.WARNING: os.path.join(timestamp_dir, "warning.log"),
     logging.CRITICAL: os.path.join(timestamp_dir, "critical.log"),
-    logging.ERROR: os.path.join(timestamp_dir, "error.log")
+    logging.ERROR: os.path.join(timestamp_dir, "error.log"),
 }
 
 logs_format = "[ [%(asctime)s] : %(levelname)s : %(name)s : %(pathname)s : %(module)s : %(lineno)d : %(message)s ]"
@@ -53,13 +63,15 @@ logger = logging.getLogger("MID_AI_APIs")
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
 
+
 # LevelFilter to allow only specific log levels
 class LevelFilter(logging.Filter):
     def __init__(self, level):
         self.level = level
-    
+
     def filter(self, record):
         return record.levelno == self.level
+
 
 # File handler for each log level
 def create_file_handler(level, log_file_path):
@@ -73,10 +85,12 @@ def create_file_handler(level, log_file_path):
         print(f"Error in create_file_handler function: {e}")
         raise e
 
+
 # Add file handlers to the logger
 for level, log_filepath in log_file_paths.items():
     handler = create_file_handler(level, log_filepath)
     logger.addHandler(handler)
+
 
 # Function to return color for log levels
 def get_color_for_level(level):
@@ -96,9 +110,11 @@ def get_color_for_level(level):
         print(f"Error in get_color_for_level function: {e}")
         raise e
 
+
 # Console Handler for colored output
 console_handler = logging.StreamHandler(sys.stdout)
 console_handler.setLevel(logging.DEBUG)
+
 
 # Custom Formatter for color-coding the console output
 class ColorFormatter(logging.Formatter):
@@ -110,6 +126,7 @@ class ColorFormatter(logging.Formatter):
         except Exception as e:
             print(f"Error in ColorFormatter function: {e}")
             raise e
+
 
 # Set up console handler with color formatter
 console_handler.setFormatter(ColorFormatter(logs_format))

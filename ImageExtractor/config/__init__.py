@@ -1,8 +1,10 @@
 import os
-from dotenv import load_dotenv # type: ignore
-from pydantic import BaseModel # type: ignore
+
+from dotenv import load_dotenv  # type: ignore
+from pydantic import BaseModel  # type: ignore
 
 load_dotenv()
+
 
 class Setting(BaseModel):
     debug: bool = os.getenv("DEBUG")

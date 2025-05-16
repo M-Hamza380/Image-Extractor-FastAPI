@@ -1,15 +1,10 @@
-from pydantic import BaseModel, Field # type: ignore
-from typing import List, Dict, Optional, Any
+from pydantic import BaseModel, Field
 
 
 class AvailableModels(BaseModel):
     """Response available models"""
+
     success: bool = Field(
-        default_factory = bool,
-        description = 'Message for display with true or false'
+        default_factory=bool, description="Message for display with true or false"
     )
-    models: list = Field(
-        default_factory = list,
-        description = 'List of available models'
-    )
-    
+    models: list = Field(default_factory=list, description="List of available models")
