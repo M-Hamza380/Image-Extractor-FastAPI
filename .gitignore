@@ -175,3 +175,4 @@ cython_debug/
 
 # My virtualenv
 *.img_extract
+static/images*

@@ -1,11 +1,11 @@
 import os
 
-from dotenv import load_dotenv  # type: ignore
-from pydantic import BaseModel  # type: ignore
+from dotenv import load_dotenv
+from pydantic import BaseModel
 
 load_dotenv()
 
 
-class Setting(BaseModel):
-    debug: bool = os.getenv("DEBUG")
-    echo_active: bool = os.getenv("ECHO_ACTIVE")
+class Settings(BaseModel):
+    debug: str | None = os.environ.get("DEBUG")
+    echo_active: str | None = os.getenv("ECHO_ACTIVE")

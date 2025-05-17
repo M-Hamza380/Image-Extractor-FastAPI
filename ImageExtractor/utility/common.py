@@ -1,9 +1,9 @@
 from functools import lru_cache
 
-from ..config import Setting
+from ..config import Settings
 
 
 @lru_cache
 def get_setting():
     """Returns the application settings"""
-    return Setting()
+    return Settings()

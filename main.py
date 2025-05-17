@@ -1,15 +1,16 @@
 from pathlib import Path
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from ImageExtractor.config import Setting
-
-# from ImageExtractor.routers import ocr_routes
+from ImageExtractor.config import Settings
+from ImageExtractor.constants.path_constant import STATIC_DIR
+from ImageExtractor.routers.route import route
+from ImageExtractor.utility.common import get_setting
 from ImageExtractor.utility.logger import logger
 
 # Add templating files directory for serving html pages
@@ -33,23 +34,25 @@ app.add_middleware(
 )
 
 # Add static files directory for serving staticfiles
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
-# # Include router
-# app.include_router(ocr_routes, prefix="/api/v1", tags=['Image Extractor'])
+# Include router
+app.include_router(route)
 
 
 # Health check endpoint
 @app.get("/", response_class=HTMLResponse)
-def index(request: Request):
+def index(request: Request, setting: Settings = Depends(get_setting)):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
 if __name__ == "__main__":
     try:
-        setting = Setting()
-        logger.critical(f"Starting the server with Settings: {setting.debug}")
+        setting = get_setting()
+        logger.critical(
+            f"Starting the server with Settings: {setting.debug}, type of: {type(setting)}"
+        )
         if setting.debug:
             logger.debug("Debug mode is enabled")
             uvicorn.run("main:app", host="localhost", port=1253, reload=True)
