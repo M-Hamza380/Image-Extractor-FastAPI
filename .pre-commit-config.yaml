@@ -1,5 +1,14 @@
 repos:
 
+-   repo: local
+    hooks:
+      - id: pytest-check
+        name: PyTest Runner
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
+
 -   repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.10.1
     hooks:
