@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import uvicorn
@@ -9,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 
 from ImageExtractor.config import Settings
 from ImageExtractor.constants.path_constant import STATIC_DIR
+from ImageExtractor.ocr_models.models_loader import load_ocr_models
 from ImageExtractor.routers.route import route
 from ImageExtractor.utility.common import get_setting
 from ImageExtractor.utility.logger import logger
@@ -18,10 +20,21 @@ base_path = Path(__file__).parent
 template_path = base_path / "templates"
 templates = Jinja2Templates(directory=str(template_path))
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        load_ocr_models()
+        yield
+    except Exception as e:
+        raise e
+
+
 app = FastAPI(
     title="OCR API",
     description="Extract data from image, images or pdf file using multiple OCR models!",
     vresion="0.0.1",
+    lifespan=lifespan,
 )
 
 # Configure CROS

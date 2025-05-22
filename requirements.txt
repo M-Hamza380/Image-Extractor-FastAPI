@@ -5,7 +5,7 @@ python-multipart
 aiofiles
 python-dotenv
 colorama
-numpy
+numpy==1.24.4
 pillow
 opencv-python
 gunicorn
@@ -16,3 +16,7 @@ black
 pre-commit
 isort
 httpx
+pytesseract
+easyocr
+paddlepaddle
+paddleocr
